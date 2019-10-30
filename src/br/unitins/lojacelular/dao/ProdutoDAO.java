@@ -189,7 +189,9 @@ public class ProdutoDAO extends DAO<Produto> {
 					"  id, " +
 					"  nome, " +
 					"  descricao, " +
-					"  valor " +
+					"  preco, " +
+					"  marcaproduto, " +
+					"  corproduto " +
 					"FROM " +
 					"  public.produto " +
 					"WHERE id = ? ");

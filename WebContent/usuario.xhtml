@@ -89,6 +89,8 @@
 				action="#{usuarioController.limpar()}">
 				<f:ajax render="formPrincipal inputNome inputData inputCep checkAtivo" execute="@this" resetValues="true"/>
 			</h:commandButton>
+			
+			<h:button value="Voltar" onclick="window.history.go(-1); return false;"/> 
 		</h:panelGrid>
 		
 		<h:panelGrid id="panelDataTable">
