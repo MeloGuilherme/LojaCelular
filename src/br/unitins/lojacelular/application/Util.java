@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 public class Util {
 
 	public static void addMessageInfo(String message) {
@@ -33,5 +35,10 @@ public class Util {
 			addMessageError("Erro ao redirecionar a página.");
 			e.printStackTrace();
 		}
+	}
+	
+	public static String gerarHash(String valor) {
+		
+		return DigestUtils.sha256Hex(valor);
 	}
 }

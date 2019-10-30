@@ -41,6 +41,8 @@ public class UsuarioController implements Serializable {
 			
 			try {
 				
+				getUsuario().setSenha(Util.gerarHash(getUsuario().getSenha()));
+				
 				dao.create(getUsuario());
 				dao.getConnection().commit();
 				Util.addMessageInfo("Inclusão realizada com sucesso.");
@@ -67,6 +69,8 @@ public class UsuarioController implements Serializable {
 			
 			try {
 				
+				getUsuario().setSenha(Util.gerarHash(getUsuario().getSenha()));
+
 				dao.update(getUsuario());
 				dao.getConnection().commit();
 				Util.addMessageInfo("Alteração realizada com sucesso.");
