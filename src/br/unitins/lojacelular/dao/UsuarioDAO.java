@@ -68,7 +68,7 @@ public Usuario login(String login, String senha) {
 	@Override
 	public void create(Usuario usuario) throws SQLException {
 		
-		Connection  conn = getConnection();
+		Connection conn = getConnection();
 			
 		PreparedStatement stat = conn.prepareStatement(
 				"INSERT INTO " +
@@ -121,6 +121,29 @@ public Usuario login(String login, String senha) {
 			
 		stat.execute();
 	}
+	
+//	@Override
+//	public void delete(int id) throws SQLException {
+//		
+//		Connection conn = getConnection();
+//		
+//		PreparedStatement stat = conn.prepareStatement(
+//				"DELETE FROM public.telefone WHERE id = ?");
+//		
+//		stat.setInt(1, id);
+//		
+//		stat = conn.prepareStatement(
+//				"DELETE FROM public.endereco WHERE id = ?");
+//		
+//		stat.setInt(1, id);
+//		
+//		stat = conn.prepareStatement(
+//				"DELETE FROM public.usuario WHERE id = ?");
+//		
+//		stat.setInt(1, id);
+//		
+//		stat.execute();
+//	}
 
 	@Override
 	public boolean delete(int id) {
@@ -130,6 +153,11 @@ public Usuario login(String login, String senha) {
 			return false;
 		
 		try {
+			
+//			UsuarioDAO usuDao = new UsuarioDAO();
+//			
+//			usuDao.apagaEndereco(id);
+//			usuDao.apagaTelefone(id);
 			
 			PreparedStatement stat = conn.prepareStatement(
 					"DELETE FROM public.usuario WHERE id = ?");
@@ -142,6 +170,30 @@ public Usuario login(String login, String senha) {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public void apagaTelefone(int id) throws SQLException {
+		
+		Connection conn = getConnection();
+		
+		PreparedStatement stat = conn.prepareStatement(
+				"DELETE FROM public.telefone WHERE id = ?");
+		
+		stat.setInt(1, id);
+		
+		stat.execute();
+	}
+	
+	public void apagaEndereco(int id) throws SQLException {
+		
+		Connection conn = getConnection();
+		
+		PreparedStatement stat = conn.prepareStatement(
+				"DELETE FROM public.endereco WHERE id = ?");
+		
+		stat.setInt(1, id);
+		
+		stat.execute();
 	}
 
 	@Override
@@ -327,4 +379,5 @@ public Usuario login(String login, String senha) {
 		
 		return null;
 	}
+	
 }

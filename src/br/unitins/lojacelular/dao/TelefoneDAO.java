@@ -40,8 +40,15 @@ public class TelefoneDAO extends DAO<Telefone> {
 	}
 
 	@Override
-	public boolean delete(int id) {
-		// TODO Auto-generated method stub
+	public boolean delete(int id) throws SQLException {
+		Connection conn = getConnection();
+		
+		PreparedStatement stat = conn.prepareStatement(
+				"DELETE FROM public.usuario WHERE id = ?");
+		
+		stat.setInt(1, id);
+		
+		stat.execute();
 		return false;
 	}
 

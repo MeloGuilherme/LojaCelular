@@ -73,7 +73,7 @@ public class ProdutoController implements Serializable{
 		}
 	}
 	
-	public boolean excluir() {
+	public boolean excluir() throws SQLException {
 		
 		DAO<Produto> dao = new ProdutoDAO();
 		// faz a exclusao no banco de dados
