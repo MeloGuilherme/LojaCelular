@@ -30,8 +30,22 @@ public class TelefoneDAO extends DAO<Telefone> {
 	}
 
 	@Override
-	public void update(Telefone entity) throws SQLException {
-		// TODO Auto-generated method stub
+	public void update(Telefone telefone) throws SQLException {
+		
+		Connection conn = getConnection();
+
+		PreparedStatement stat = conn.prepareStatement(
+				"UPDATE public.telefone SET" + 
+				" codigoarea = ?, " +
+				" numero = ? " + 
+				"WHERE " + 
+				" id = ? ");
+		stat.setString(1, telefone.getCodigoArea());
+		stat.setString(2, telefone.getNumero());
+		stat.setInt(3, telefone.getId());
+		
+		stat.execute();
+		stat.close();
 	}
 
 	@Override

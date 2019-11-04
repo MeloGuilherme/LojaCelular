@@ -8,7 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unitins.lojacelular.model.*;
+import br.unitins.lojacelular.model.Endereco;
+import br.unitins.lojacelular.model.Perfil;
+import br.unitins.lojacelular.model.Telefone;
+import br.unitins.lojacelular.model.Usuario;
 
 public class UsuarioDAO extends DAO<Usuario> {
 
@@ -88,6 +91,7 @@ public class UsuarioDAO extends DAO<Usuario> {
 		// obtendo o id gerado pela tabela do banco de dados
 		ResultSet rs = stat.getGeneratedKeys();
 		rs.next();
+		
 		usuario.getTelefone().setId(rs.getInt("id"));
 		usuario.getEndereco().setId(rs.getInt("id"));
 		
@@ -119,6 +123,12 @@ public class UsuarioDAO extends DAO<Usuario> {
 		stat.setBoolean(4, usuario.getAtivo());
 		stat.setInt(5, usuario.getPerfil().getValue());
 		stat.setInt(6, usuario.getId());
+		
+		TelefoneDAO telDao = new TelefoneDAO(conn);
+		EnderecoDAO endDao = new EnderecoDAO(conn);
+		
+		telDao.update(usuario.getTelefone());
+		endDao.update(usuario.getEndereco());
 			
 		stat.execute();
 	}

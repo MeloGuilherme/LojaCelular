@@ -34,8 +34,25 @@ public class EnderecoDAO extends DAO<Endereco> {
 
 	@Override
 	public void update(Endereco endereco) throws SQLException {
-		// TODO Auto-generated method stub
+		
+		Connection conn = getConnection();
 
+		PreparedStatement stat = conn.prepareStatement(
+				"UPDATE public.endereco SET" + 
+				" cidade = ?, " +
+				" estado = ?, " +
+				" cep = ?, " +
+				" logradouro = ? " + 
+				"WHERE " + 
+				" id = ? ");
+		stat.setString(1, endereco.getCidade());
+		stat.setString(2, endereco.getEstado());
+		stat.setString(3, endereco.getCep());
+		stat.setString(4, endereco.getLogradouro());
+		stat.setInt(5, endereco.getId());
+		
+		stat.execute();
+		stat.close();
 	}
 
 	@Override
