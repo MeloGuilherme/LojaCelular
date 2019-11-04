@@ -23,7 +23,7 @@ public class LoginController {
 		
 		if (usuario != null) {
 			
-			Util.redirect("usuario.xhtml");
+			Util.redirect("menu.xhtml");
 		}
 		
 		else {

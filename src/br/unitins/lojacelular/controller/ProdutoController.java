@@ -61,7 +61,7 @@ public class ProdutoController implements Serializable{
 			dao.getConnection().commit();
 			Util.addMessageInfo("Alteração realizada com sucesso.");
 			limpar();
-//			Util.redirect("consultaproduto.xhtml");
+			Util.redirect("consultaproduto.xhtml");
 		} 
 		
 		catch (SQLException e) {
@@ -70,6 +70,7 @@ public class ProdutoController implements Serializable{
 			dao.closeConnection();
 			Util.addMessageInfo("Erro ao alterar o Produto no Banco de Dados.");
 			e.printStackTrace();
+			Util.redirect("consultaproduto.xhtml");
 		}
 	}
 	
@@ -95,6 +96,7 @@ public class ProdutoController implements Serializable{
 		finally {
 			
 			dao.closeConnection();
+			Util.redirect("consultaproduto.xhtml");
 		}
 	}
 
