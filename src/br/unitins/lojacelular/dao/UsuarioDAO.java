@@ -21,7 +21,7 @@ public class UsuarioDAO extends DAO<Usuario> {
 		super(null);
 	}
 	
-public Usuario login(String login, String senha) {
+	public Usuario login(String login, String senha) {
 		
 		Connection conn = getConnection();
 		
@@ -48,6 +48,7 @@ public Usuario login(String login, String senha) {
 			if(rs.next()) {
 				usuario = new Usuario();
 				usuario.setTelefone(new Telefone());
+				usuario.setEndereco(new Endereco());
 				usuario.setId(rs.getInt("id"));
 				usuario.setNome(rs.getString("nome"));
 				usuario.setLogin(rs.getString("login"));
@@ -122,83 +123,30 @@ public Usuario login(String login, String senha) {
 		stat.execute();
 	}
 	
-//	@Override
-//	public void delete(int id) throws SQLException {
-//		
-//		Connection conn = getConnection();
-//		
-//		PreparedStatement stat = conn.prepareStatement(
-//				"DELETE FROM public.telefone WHERE id = ?");
-//		
-//		stat.setInt(1, id);
-//		
-//		stat = conn.prepareStatement(
-//				"DELETE FROM public.endereco WHERE id = ?");
-//		
-//		stat.setInt(1, id);
-//		
-//		stat = conn.prepareStatement(
-//				"DELETE FROM public.usuario WHERE id = ?");
-//		
-//		stat.setInt(1, id);
-//		
-//		stat.execute();
-//	}
-
 	@Override
-	public boolean delete(int id) {
-
-		Connection conn = getConnection();
-		if (conn == null) 
-			return false;
-		
-		try {
-			
-//			UsuarioDAO usuDao = new UsuarioDAO();
-//			
-//			usuDao.apagaEndereco(id);
-//			usuDao.apagaTelefone(id);
-			
-			PreparedStatement stat = conn.prepareStatement(
-					"DELETE FROM public.usuario WHERE id = ?");
-			stat.setInt(1, id);
-			
-			stat.execute();
-			return true;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	public void apagaTelefone(int id) throws SQLException {
+	public void delete(int id) throws SQLException {
 		
 		Connection conn = getConnection();
+		
+		TelefoneDAO telDao = new TelefoneDAO(conn);
+		EnderecoDAO endDao = new EnderecoDAO(conn);
+		
+		telDao.delete(id);
+		endDao.delete(id);
 		
 		PreparedStatement stat = conn.prepareStatement(
-				"DELETE FROM public.telefone WHERE id = ?");
+				"DELETE FROM public.usuario WHERE id = ?");
 		
 		stat.setInt(1, id);
 		
 		stat.execute();
 	}
 	
-	public void apagaEndereco(int id) throws SQLException {
-		
-		Connection conn = getConnection();
-		
-		PreparedStatement stat = conn.prepareStatement(
-				"DELETE FROM public.endereco WHERE id = ?");
-		
-		stat.setInt(1, id);
-		
-		stat.execute();
-	}
-
 	@Override
 	public List<Usuario> findAll() {
+		
 		Connection conn = getConnection();
+		
 		if (conn == null) 
 			return null;
 		
@@ -240,7 +188,9 @@ public Usuario login(String login, String senha) {
 	}
 	
 	public Usuario findId(Integer id) {
+		
 		Connection conn = getConnection();
+		
 		if (conn == null) 
 			return null;
 		
@@ -265,13 +215,24 @@ public Usuario login(String login, String senha) {
 			
 			if(rs.next()) {
 				usuario = new Usuario();
-				usuario.setTelefone(new Telefone());
 				usuario.setId(rs.getInt("id"));
 				usuario.setNome(rs.getString("nome"));
 				usuario.setLogin(rs.getString("login"));
 				usuario.setSenha(rs.getString("senha"));
 				usuario.setAtivo(rs.getBoolean("ativo"));
 				usuario.setPerfil(Perfil.valueOf(rs.getInt("perfil")));
+				
+				TelefoneDAO telDao = new TelefoneDAO(conn);
+				usuario.setTelefone(telDao.findById(usuario.getId()));
+				// caso o retorno do telefone seja nulo, instanciar um telefone
+				if (usuario.getTelefone() == null)
+					usuario.setTelefone(new Telefone());
+				
+				EnderecoDAO endDao = new EnderecoDAO(conn);
+				usuario.setEndereco(endDao.findById(usuario.getId()));
+				// caso o retorno do endereco seja nulo, instanciar um endereco
+				if (usuario.getEndereco() == null)
+					usuario.setEndereco(new Endereco());
 			}
 			
 			return usuario;

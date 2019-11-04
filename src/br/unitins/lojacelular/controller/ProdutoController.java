@@ -73,21 +73,28 @@ public class ProdutoController implements Serializable{
 		}
 	}
 	
-	public boolean excluir() throws SQLException {
-		
+	public void excluir() {
+
 		DAO<Produto> dao = new ProdutoDAO();
 		// faz a exclusao no banco de dados
-		
-		if (dao.delete(getProduto().getId())) {
+		try {
+			
+			dao.delete(getProduto().getId());
+			dao.getConnection().commit();
 			Util.addMessageInfo("Exclusão realizada com sucesso.");
 			limpar();
-			return true;
+		}
+		
+		catch (SQLException e) {
+			
+			dao.rollbackConnection();
+			Util.addMessageInfo("Erro ao excluir o Produto no Banco de Dados.");
+			e.printStackTrace();
 		} 
 		
-		else {
+		finally {
 			
-			Util.addMessageInfo("Erro ao excluir o Produto no Banco de Dados.");
-			return false;
+			dao.closeConnection();
 		}
 	}
 

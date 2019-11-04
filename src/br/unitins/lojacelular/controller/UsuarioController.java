@@ -90,56 +90,39 @@ public class UsuarioController implements Serializable {
 	
 	public void excluir() {
 		
-//		if (excluir(getUsuario()))
+		if (excluir(getUsuario()))
 			limpar();
 	}
 	
-//	public boolean excluir(Usuario usuario) throws SQLException {
-//		
-//		DAO<Usuario> dao = new UsuarioDAO();
-//		
-//		// faz a exclusao no banco de dados
-//		if (dao.delete(usuario.getId())) {
-//			
-//			Util.addMessageInfo("Exclusão realizada com sucesso.");
-//			listaUsuario = null;
-//			return true;
-//		} 
-//		
-//		else {
-//			Util.addMessageInfo("Erro ao excluir o Usuário no Banco de Dados.");
-//			return false;
-//		}
-//	}
-	
-	public void excluir(Usuario usuario) {
-		
+	public boolean excluir(Usuario usuario) {
+
 		DAO<Usuario> dao = new UsuarioDAO();
-//		UsuarioDAO usuDao = new UsuarioDAO();
-		
+
 		try {
-			
-//			usuDao.apagaTelefone(usuario.getId());
-//			usuDao.apagaEndereco(usuario.getId());
+
 			dao.delete(usuario.getId());
+			dao.getConnection().commit();
 			Util.addMessageInfo("Exclusão realizada com sucesso.");
-			limpar();
 			listaUsuario = null;
-//			return true;
-		} 
-		
+			return true;
+		}
+
 		catch (Exception e) {
-			
+
 			dao.rollbackConnection();
-			dao.closeConnection();
 			Util.addMessageInfo("Erro ao excluir seu Usuário no Banco de Dados.");
 			e.printStackTrace();
-//			return false;
+			return false;
+		}
+
+		finally {
+			
+			dao.closeConnection();
 		}
 	}
-	
+
 	private boolean validarDados() {
-		
+
 		if (getUsuario().getSenha().isBlank()) {
 			Util.addMessageWarn("O campo senha deve ser informado.");
 			return false;
@@ -147,7 +130,7 @@ public class UsuarioController implements Serializable {
 
 		return true;
 	}
-	
+
 	public void editar(Usuario usuario) {
 		UsuarioDAO dao = new UsuarioDAO();
 		// buscando um usuario pelo id
@@ -165,14 +148,14 @@ public class UsuarioController implements Serializable {
 			listaUsuario = dao.findAll();
 			if (listaUsuario == null)
 				listaUsuario = new ArrayList<Usuario>();
-		} 
+		}
 		return listaUsuario;
 	}
-	
+
 	public void limpar() {
 		usuario = null;
 	}
-	
+
 	public Perfil[] getListaPerfil() {
 		return Perfil.values();
 	}

@@ -12,7 +12,7 @@ public abstract class DAO<T> {
 
 	public abstract void update(T entity) throws SQLException;
 
-	public abstract boolean delete(int id) throws SQLException; // throws SQLException;
+	public abstract void delete(int id) throws SQLException; // throws SQLException;
 
 	public abstract List<T> findAll();
 
