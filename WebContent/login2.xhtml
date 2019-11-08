@@ -50,6 +50,7 @@
 		</div>
 	</nav>
 
+	
 	<div class="container py-5">
 		<div class="row">
 			<div class="col-md-12">
@@ -64,6 +65,11 @@
 							</div>
 							<div class="card-body">
 								<form class="form" jsf:id="formLogin">
+									<h:messages id="messages" 
+												infoStyle="color:green"
+												warnStyle="color:orange" 
+												errorStyle="color:red" 
+												globalOnly="false" />
 									<div class="form-group">
 										<h:outputLabel value="Email: " />
 										<input type="text"
@@ -84,9 +90,13 @@
 										<div class="col-lg-9">
 
 											<h:commandButton class="btn btn-success" value="Logar"
-												action="#{loginController.logar()}" />
+												action="#{loginController.logar()}">
+
+											</h:commandButton>
 											<h:commandButton class="btn btn-secondary" value="Limpar"
-												actionListener="#{loginController.limpar()}" />
+												actionListener="#{loginController.limpar()}">
+												<f:ajax render="@form" execute="@this" resetValues="true" />
+											</h:commandButton>
 										</div>
 									</div>
 

@@ -23,11 +23,13 @@
 			<h:commandButton value="Logar"
 				action="#{loginController.logar()}" />
 			<h:commandButton value="Limpar" 
-				actionListener="#{loginController.limpar()}" />
+				actionListener="#{loginController.limpar()}">
+				<f:ajax render="@form" execute="@this" resetValues="true"/>
+				
+			</h:commandButton>
 			
 		</h:panelGrid>
 		
-		<h:outputLabel value="#{loginController.usuario.login}"/>
 	</h:form>
 </h:body>
 </html>
