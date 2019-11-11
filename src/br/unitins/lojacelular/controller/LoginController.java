@@ -3,7 +3,7 @@ package br.unitins.lojacelular.controller;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-import br.unitins.lojacelular.application.Util;
+import br.unitins.lojacelular.application.*;
 import br.unitins.lojacelular.dao.*;
 import br.unitins.lojacelular.model.*;
 
@@ -23,6 +23,8 @@ public class LoginController {
 		
 		if (usuario != null) {
 			
+			// armazenando um usuario na sessao
+			Session.getInstance().setAttribute("usuarioLogado", usuario);
 			Util.redirect("menu.xhtml");
 		}
 		

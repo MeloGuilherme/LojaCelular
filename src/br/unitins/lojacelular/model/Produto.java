@@ -5,7 +5,7 @@ public class Produto {
 	private Integer id;
 
 	private String nome;
-	private Double preco;
+	private Float preco;
 	private String descricao;
 	private MarcaProduto marcaProduto;
 	private CorProduto corProduto;
@@ -14,7 +14,7 @@ public class Produto {
 		super();
 	}
 
-	public Produto(Integer id, String nome, Double preco, String descricao, MarcaProduto marcaProduto,
+	public Produto(Integer id, String nome, Float preco, String descricao, MarcaProduto marcaProduto,
 			CorProduto corProduto) {
 		super();
 		this.id = id;
@@ -41,11 +41,11 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
+	public Float getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(Float preco) {
 		this.preco = preco;
 	}
 

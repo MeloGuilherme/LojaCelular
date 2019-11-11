@@ -106,7 +106,7 @@ public class ProdutoDAO extends DAO<Produto> {
 				produto.setId(rs.getInt("id"));
 				produto.setNome(rs.getString("nome"));
 				produto.setDescricao(rs.getString("descricao"));
-				produto.setPreco(rs.getDouble("preco"));
+				produto.setPreco(rs.getFloat("preco"));
 				produto.setMarcaProduto(MarcaProduto.valueOf(rs.getInt("marcaproduto")));
 				produto.setCorProduto(CorProduto.valueOf(rs.getInt("corproduto")));
 
@@ -152,7 +152,7 @@ public class ProdutoDAO extends DAO<Produto> {
 				produto.setId(rs.getInt("id"));
 				produto.setNome(rs.getString("nome"));
 				produto.setDescricao(rs.getString("descricao"));
-				produto.setPreco(rs.getDouble("preco"));
+				produto.setPreco(rs.getFloat("preco"));
 				produto.setMarcaProduto(MarcaProduto.valueOf(rs.getInt("marcaproduto")));
 				produto.setCorProduto(CorProduto.valueOf(rs.getInt("corproduto")));
 
@@ -198,7 +198,7 @@ public class ProdutoDAO extends DAO<Produto> {
 				produto.setId(rs.getInt("id"));
 				produto.setNome(rs.getString("nome"));
 				produto.setDescricao(rs.getString("descricao"));
-				produto.setPreco(rs.getDouble("preco"));
+				produto.setPreco(rs.getFloat("preco"));
 				produto.setMarcaProduto(MarcaProduto.valueOf(rs.getInt("marcaproduto")));
 				produto.setCorProduto(CorProduto.valueOf(rs.getInt("corproduto")));
 			}
