@@ -2,55 +2,159 @@
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:jsf="http://xmlns.jcp.org/jsf"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<ui:composition template="template.xhtml">
-<ui:define name="conteudo">
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
 
-	<center>
-		<h1>Venda de Produtos</h1>
+<h:head>
 
-		<h:form>
-			<h:messages style="color:red" />
-			<h:panelGrid id="panelForm"  columns="3">
+	<title>Venda de Produtos</title>
 
-				<h:outputLabel value="Nome do Produto: " />
-				<h:inputText value="#{vendaProdutoController.nome}" />
+	<meta charset="utf-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
 
-				<h:commandButton value="Pesquisar"
-					actionListener="#{vendaProdutoController.pesquisar}" >
-					<f:ajax execute="panelForm" render="@all" />
-				</h:commandButton>	
-				
-			</h:panelGrid>
+</h:head>
+<h:body>
 
-			
-			<h:dataTable value="#{vendaProdutoController.listaProduto}" var="obj">
-				<h:column>
-					<f:facet name="header">Nome</f:facet>
-					<h:outputLabel value="#{obj.nome}" />
-				</h:column>
-				
-				<h:column>
-					<f:facet name="header">Valor</f:facet>
-					<h:outputLabel value="#{obj.valor}">
-						<f:convertNumber  locale="pt_BR" currencySymbol="R$" type="currency"/>
-					</h:outputLabel>
-				</h:column>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Sistema - Guilherme</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-				<h:column>
-					<f:facet name="header">Ação</f:facet>
-					<h:commandButton value="Adicionar Carrinho"
-						actionListener="#{vendaProdutoController.adicionar(obj.id)}" >
-						<f:ajax render="@all" execute="@this" />
-					</h:commandButton>
-				</h:column>
-				
-			</h:dataTable>
-			
-		</h:form>
-	</center>
-</ui:define>
-</ui:composition>	
-	
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link"
+					href="menu.xhtml">Menu <span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="usuario.xhtml">Usuário</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="produto.xhtml">Produto</a></li>
+				<li class="nav-items dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="true"> Consulta </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="consultausuario.xhtml">Usuários</a>
+						<a class="dropdown-item" href="consultaproduto.xhtml">Produtos</a>
+					</div></li>
+			</ul>
+
+		</div>
+		<div>
+			<h:form>
+				<h:outputLabel value="Olá #{menuController.usuarioLogado.nome}" />
+				<h:commandLink value=" (Sair)"
+					action="#{menuController.encerrarSessao}" style="color:Black" />
+			</h:form>
+		</div>
+	</nav>
+
+	<div class="container py-5">
+		<div class="col-md-12">
+			<h1 class="text-center mb-4">
+				Venda de Produto<span class="glyphicon glyphicon-phone"
+					aria-hidden="true"></span>
+			</h1>
+
+			<div class="row">
+				<div class="col-md-6 mx-auto">
+					<h:messages styleClass="alert alert-danger hmessages" />
+					<!-- form card login -->
+					<div class="card rounded-0">
+						<div class="card-header">
+							<h4 class="mb-0">Nome:</h4>
+
+						</div>
+						<div class="card-body">
+
+							<form class="formPesquisar">
+
+
+								<div class="form-group">
+									<input type="text"
+										class="form-control form-control-lg rounded-0"
+										jsf:id="inputNome" jsf:value="#{loginController.usuario.nome}" />
+								</div>
+
+								<div class="form-group row">
+									<div class="col-lg-9">
+										<h:commandButton class="btn btn-success" value="Pesquisar"
+											actionListener="#{vendaProdutoController.pesquisar}">
+											<f:ajax execute="card-body" render="@all" />
+										</h:commandButton>
+
+									</div>
+								</div>
+
+								<br></br>
+
+								<h:dataTable id="dt" class="table table-striped"
+									value="#{vendaProdutoController.listaProduto}" var="obj">
+									<h:column>
+										<f:facet name="header">Nome</f:facet>
+										<h:outputLabel value="#{obj.nome}" />
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">Preço</f:facet>
+										<h:outputLabel value="#{obj.preco}">
+											<f:convertNumber locale="pt_BR" currencySymbol="R$"
+												type="currency" />
+										</h:outputLabel>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">Ação</f:facet>
+										<h:commandButton class="btn btn-info"
+											value="Adicionar Carrinho"
+											actionListener="#{vendaProdutoController.adicionar(obj.id)}">
+											<f:ajax render="@all" execute="@this" />
+										</h:commandButton>
+										<span class="glyphicon glyphicon-phone" />
+									</h:column>
+
+								</h:dataTable>
+
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!--/row-->
+
+		</div>
+		<!--/col-->
+	</div>
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		jsf:integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		jsf:crossorigin="anonymous"></script>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+</h:body>
 </html>
