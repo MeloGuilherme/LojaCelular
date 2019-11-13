@@ -15,6 +15,9 @@ public class Venda {
 //	private StatusPedido statusPedido;
 
 	private List<ItemVenda> listaItemVenda;
+	
+	// campo calculado
+	private Float totalVenda = 0.0f;
 
 	public Integer getId() {
 		return id;
@@ -46,6 +49,14 @@ public class Venda {
 
 	public void setListaItemVenda(List<ItemVenda> listaItemVenda) {
 		this.listaItemVenda = listaItemVenda;
+	}
+	
+	public Float getTotalVenda() {
+		return totalVenda;
+	}
+
+	public void setTotalVenda(Float totalVenda) {
+		this.totalVenda = totalVenda;
 	}
 
 }

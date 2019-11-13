@@ -62,7 +62,7 @@ public class VendaProdutoController implements Serializable {
 			
 			if (listaProduto == null)
 				listaProduto = new ArrayList<Produto>();
-			
+
 			dao.closeConnection();
 		}
 		
@@ -70,8 +70,9 @@ public class VendaProdutoController implements Serializable {
 	}
 	
 	public void pesquisar() {
-		
+		System.out.println("Caiu aqui 1 - Antes de null");
 		listaProduto = null;
+		System.out.println("Caiu aqui 1 - Depois de null");
 	}
 
 	public String getNome() {

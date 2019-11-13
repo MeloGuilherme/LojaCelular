@@ -58,80 +58,66 @@
 
 	<div class="container py-5">
 		<div class="col-md-12">
-			<h1 class="text-center mb-4">
-				Venda de Produto<span class="glyphicon glyphicon-phone"
-					aria-hidden="true"></span>
-			</h1>
+			<h1 class="text-center mb-4">Venda de Produtos</h1>
 
 			<div class="row">
 				<div class="col-md-6 mx-auto">
-					<h:messages styleClass="alert alert-danger hmessages" />
-					<!-- form card login -->
-					<div class="card rounded-0">
-						<div class="card-header">
-							<h4 class="mb-0">Nome:</h4>
+					<h:form>
+						<h:messages class="text-center mb-4" style="color:green" />
+						<div class="card rounded-0">
+							<div class="card-header">
+								<!--  <h4 class="mb-0">Nome:</h4> -->
+							</div>
 
+							<div class="card-body">
+								<h:panelGrid id="panelForm" columns="4">
+
+									<h:outputLabel value="Nome do Produto: " 
+									style="font-size: 20px;"/>
+									<h:inputText value="#{vendaProdutoController.nome}" />
+
+									<h:commandButton value="Pesquisar"
+										actionListener="#{vendaProdutoController.pesquisar}"
+										class="btn btn-secondary">
+										<f:ajax execute="panelForm" render="@all" />
+									</h:commandButton>
+
+								</h:panelGrid>
+							</div>
+							
+							<br></br>
+
+							<h:dataTable value="#{vendaProdutoController.listaProduto}"
+								var="obj" class="table table-striped">
+								
+								<h:column>
+									<f:facet name="header">Nome</f:facet>
+									<h:outputLabel value="#{obj.nome}"/>
+								</h:column>
+								
+								<h:column>
+									<f:facet name="header">Valor</f:facet>
+									<h:outputLabel value="#{obj.preco}">
+										<f:convertNumber locale="pt_BR" currencySymbol="R$"
+											type="currency" />
+									</h:outputLabel>
+								</h:column>
+
+								<h:column>
+									<f:facet name="header">Ação</f:facet>
+									<h:commandButton value="Adicionar ao Carrinho"
+										actionListener="#{vendaProdutoController.adicionar(obj.id)}"
+										class="btn btn-info">
+										<f:ajax render="@all" execute="@this" />
+									</h:commandButton>
+								</h:column>
+								
+							</h:dataTable>
 						</div>
-						<div class="card-body">
-
-							<form class="formPesquisar">
-
-
-								<div class="form-group">
-									<input type="text"
-										class="form-control form-control-lg rounded-0"
-										jsf:id="inputNome" jsf:value="#{loginController.usuario.nome}" />
-								</div>
-
-								<div class="form-group row">
-									<div class="col-lg-9">
-										<h:commandButton class="btn btn-success" value="Pesquisar"
-											actionListener="#{vendaProdutoController.pesquisar}">
-											<f:ajax execute="card-body" render="@all" />
-										</h:commandButton>
-
-									</div>
-								</div>
-
-								<br></br>
-
-								<h:dataTable id="dt" class="table table-striped"
-									value="#{vendaProdutoController.listaProduto}" var="obj">
-									<h:column>
-										<f:facet name="header">Nome</f:facet>
-										<h:outputLabel value="#{obj.nome}" />
-									</h:column>
-
-									<h:column>
-										<f:facet name="header">Preço</f:facet>
-										<h:outputLabel value="#{obj.preco}">
-											<f:convertNumber locale="pt_BR" currencySymbol="R$"
-												type="currency" />
-										</h:outputLabel>
-									</h:column>
-
-									<h:column>
-										<f:facet name="header">Ação</f:facet>
-										<h:commandButton class="btn btn-info"
-											value="Adicionar Carrinho"
-											actionListener="#{vendaProdutoController.adicionar(obj.id)}">
-											<f:ajax render="@all" execute="@this" />
-										</h:commandButton>
-										<span class="glyphicon glyphicon-phone" />
-									</h:column>
-
-								</h:dataTable>
-
-							</form>
-						</div>
-					</div>
+					</h:form>
 				</div>
-
 			</div>
-			<!--/row-->
-
 		</div>
-		<!--/col-->
 	</div>
 
 
