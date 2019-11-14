@@ -61,7 +61,7 @@
 			<h1 class="text-center mb-4">Venda de Produtos</h1>
 
 			<div class="row">
-				<div class="col-md-6 mx-auto">
+				<div class="col-md-8 mx-auto">
 					<h:form>
 						<h:messages class="text-center mb-4" style="color:green" />
 						<div class="card rounded-0">
@@ -72,9 +72,9 @@
 							<div class="card-body">
 								<h:panelGrid id="panelForm" columns="4">
 
-									<h:outputLabel value="Nome do Produto: " 
-									style="font-size: 20px;"/>
-									<h:inputText value="#{vendaProdutoController.nome}" />
+									<span class="label label-primary">Nome do Produto: </span>
+									<h:inputText value="#{vendaProdutoController.nome}"
+										class="form-control" />
 
 									<h:commandButton value="Pesquisar"
 										actionListener="#{vendaProdutoController.pesquisar}"
@@ -83,36 +83,37 @@
 									</h:commandButton>
 
 								</h:panelGrid>
+
+
+								<br></br>
+
+								<h:dataTable value="#{vendaProdutoController.listaProduto}"
+									var="obj" class="table table-striped">
+
+									<h:column>
+										<f:facet name="header">Nome</f:facet>
+										<h:outputLabel value="#{obj.nome}" />
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">Valor</f:facet>
+										<h:outputLabel value="#{obj.preco}">
+											<f:convertNumber locale="pt_BR" currencySymbol="R$"
+												type="currency" />
+										</h:outputLabel>
+									</h:column>
+
+									<h:column>
+										<f:facet name="header">Ação</f:facet>
+										<h:commandButton value="Adicionar ao Carrinho"
+											actionListener="#{vendaProdutoController.adicionar(obj.id)}"
+											class="btn btn-info">
+											<f:ajax render="@all" execute="@this" />
+										</h:commandButton>
+									</h:column>
+
+								</h:dataTable>
 							</div>
-							
-							<br></br>
-
-							<h:dataTable value="#{vendaProdutoController.listaProduto}"
-								var="obj" class="table table-striped">
-								
-								<h:column>
-									<f:facet name="header">Nome</f:facet>
-									<h:outputLabel value="#{obj.nome}"/>
-								</h:column>
-								
-								<h:column>
-									<f:facet name="header">Valor</f:facet>
-									<h:outputLabel value="#{obj.preco}">
-										<f:convertNumber locale="pt_BR" currencySymbol="R$"
-											type="currency" />
-									</h:outputLabel>
-								</h:column>
-
-								<h:column>
-									<f:facet name="header">Ação</f:facet>
-									<h:commandButton value="Adicionar ao Carrinho"
-										actionListener="#{vendaProdutoController.adicionar(obj.id)}"
-										class="btn btn-info">
-										<f:ajax render="@all" execute="@this" />
-									</h:commandButton>
-								</h:column>
-								
-							</h:dataTable>
 						</div>
 					</h:form>
 				</div>

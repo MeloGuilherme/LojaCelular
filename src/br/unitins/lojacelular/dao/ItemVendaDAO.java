@@ -27,7 +27,7 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
 
 		PreparedStatement stat = conn.prepareStatement(
 				"INSERT INTO " +
-			    "public.itemVenda " +
+			    "public.itemvenda " +
 			    " (valor, idvenda, idproduto) " +
 				"VALUES " +
 			    " (?, ?, ?) ");
@@ -65,7 +65,7 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
 					"  v.idproduto, " +
 					"  p.nome, " +
 					"  p.descricao, " +
-					"  p.valor as valorProduto " +
+					"  p.preco " +
 					"FROM " +
 					"  public.itemvenda v, " +
 					"  public.produto p " +
@@ -87,7 +87,7 @@ public class ItemVendaDAO extends DAO<ItemVenda> {
 				produto.setId(rs.getInt("idproduto"));
 				produto.setNome(rs.getString("nome"));
 				produto.setDescricao(rs.getString("descricao"));
-				produto.setPreco(rs.getFloat("valorProduto"));
+				produto.setPreco(rs.getFloat("preco"));
 
 				item.setProduto(produto);
 

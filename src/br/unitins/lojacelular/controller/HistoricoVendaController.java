@@ -33,11 +33,12 @@ public class HistoricoVendaController implements Serializable {
 		return listaVenda;
 	}
 
-	public String detalhes(Venda venda) {
+	public void detalhes(Venda venda) {
+		
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		flash.put("detalheVenda", venda);
 
-		return "detalhesvenda.xhtml?faces-redirect=true";
+		Util.redirect("detalhesvenda.xhtml");
 	}
 
 }
