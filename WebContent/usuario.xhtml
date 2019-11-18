@@ -21,7 +21,7 @@
 <h:body>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">Sistema - Guilherme</a>
+		<a class="navbar-brand" href="menu.xhtml">Sistema - Guilherme</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -47,6 +47,13 @@
 					</div></li>
 			</ul>
 
+		</div>
+		<div>
+			<h:form>
+				<h:outputLabel value="Olá #{menuController.usuarioLogado.nome}" />
+				<h:commandLink value=" (Sair)"
+					action="#{menuController.encerrarSessao}" style="color:Black" />
+			</h:form>
 		</div>
 	</nav>
 
@@ -134,9 +141,9 @@
 									</h:selectOneMenu>
 
 								</h:panelGrid>
-								
+
 								<br> </br>
-								
+
 								<h:panelGrid id="panelBotoes" columns="5">
 									<h:commandButton value="Incluir"
 										disabled="#{usuarioController.usuario.id != null}"
@@ -163,14 +170,14 @@
 
 									<h:commandButton value="Limpar"
 										action="#{usuarioController.limpar()}"
-										class="btn btn-secondary">
+										class="btn btn-outline-warning">
 										<f:ajax
 											render="formPrincipal inputNome inputData inputCep checkAtivo"
 											execute="@this" resetValues="true" />
 									</h:commandButton>
 
 									<h:button value="Voltar"
-										onclick="window.history.go(-1); return false;" 
+										onclick="window.history.go(-1); return false;"
 										class="btn btn-outline-dark"/>
 								</h:panelGrid>
 
@@ -182,6 +189,25 @@
 		</div>
 	</div>
 
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		jsf:integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		jsf:crossorigin="anonymous"></script>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script src="js/bootstrap.min.js"></script>
 </h:body>
 </html>

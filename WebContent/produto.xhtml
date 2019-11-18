@@ -1,82 +1,170 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html">
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
 <h:head>
 	<title>Loja de Celular</title>
-	<h:outputStylesheet library="css" name="table.css"/>
+
+	<meta charset="utf-8" name="viewport"
+		content="width=device-width, initial-scale=1"
+		http-equiv="X-UA-Conpatible" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+
 </h:head>
 <h:body>
-	
-	<h1>Cadastro de Produto</h1>
-	<h:form id="formPrincipal">
-		<h:messages id="messages" infoStyle="color:green" 
-				warnStyle="color:orange" 
-				errorStyle="color:red"
-				globalOnly="false"
-				/>
-		<h:panelGrid id="panelPrincipal" columns="2">
-			<h:outputLabel value="Nome: " />
-			<h:inputText value="#{produtoController.produto.nome}" />
-			
-			<h:outputLabel value="Descrição: " />
-			<h:inputTextarea value="#{produtoController.produto.descricao}" />
-			
-			<h:outputLabel value="Preco: " />
-			<h:inputText value="#{produtoController.produto.preco}" />
-			
-			<h:outputLabel value="Marca: " />
-			<h:selectOneMenu 
-				value="#{produtoController.produto.marcaProduto}">
-				<f:selectItem itemLabel="Selecione ...."/>
-				<f:selectItems 
-					value = "#{produtoController.listaMarcaProduto}"
-					var="marcaProduto"
-					itemLabel="#{marcaProduto.label}"
-					itemValue="#{marcaProduto}"/>
-			</h:selectOneMenu>
-			
-			<h:outputLabel value="Cor: " />
-			<h:selectOneMenu 
-				value="#{produtoController.produto.corProduto}">
-				<f:selectItem itemLabel="Selecione ...."/>
-				<f:selectItems 
-					value = "#{produtoController.listaCorProduto}"
-					var="corProduto"
-					itemLabel="#{corProduto.label}"
-					itemValue="#{corProduto}"/>
-			</h:selectOneMenu>
-			
-		</h:panelGrid>
-		
-		<h:panelGrid id="panelBotoes" columns="4">
-			<h:commandButton value="Incluir" 
-				disabled="#{produtoController.produto.id != null}"
-				actionListener="#{produtoController.incluir()}">
-				<f:ajax render="formPrincipal" execute="panelPrincipal" resetValues="true"/>
-				
-			</h:commandButton>		
-			<h:commandButton value="Alterar" 
-				disabled="#{produtoController.produto.id == null}"
-				actionListener="#{produtoController.alterar()}">
-				<f:ajax render="formPrincipal messages" execute="formPrincipal"/>
-			</h:commandButton>
-				
-			<h:commandButton value="Excluir" 
-				disabled="#{produtoController.produto.id == null}" 
-				actionListener="#{produtoController.excluir()}">
-				<f:ajax render="@all" execute="@this"/>
-			</h:commandButton>
-				
-			<h:commandButton value="Limpar" 
-				action="#{produtoController.limpar()}">
-				<f:ajax render="formPrincipal" execute="@this" />
-			</h:commandButton>
-			
-			<h:button value="Voltar" onclick="window.history.go(-1); return false;"/> 
-		</h:panelGrid>
-		
-	</h:form>
 
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="menu.xhtml">Sistema - Guilherme</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link"
+					href="menu.xhtml">Menu <span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="usuario.xhtml">Usuário</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="produto.xhtml">Produto</a></li>
+				<li class="nav-items dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="true"> Consulta </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="consultausuario.xhtml">Usuários</a>
+						<a class="dropdown-item" href="consultaproduto.xhtml">Produtos</a>
+					</div></li>
+			</ul>
+
+		</div>
+		<div>
+			<h:form>
+				<h:outputLabel value="Olá #{menuController.usuarioLogado.nome}" />
+				<h:commandLink value=" (Sair)"
+					action="#{menuController.encerrarSessao}" style="color:Black" />
+			</h:form>
+		</div>
+	</nav>
+
+	<div class="container py-5">
+		<div class="col-md-12">
+			<h1 class="text-center mb-4">Cadastro de Produto</h1>
+			<div class="row">
+				<div class="col-md-5 mx-auto">
+					<h:form id="formPrincipal" class="form">
+						<h:messages id="messages" infoStyle="color:green"
+							warnStyle="color:orange" errorStyle="color:red"
+							globalOnly="false" />
+						<div class="card rounded-0">
+							<div class="card-header"></div>
+							<div class="card-body">
+								<h:panelGrid id="panelPrincipal" columns="2">
+									<h:outputLabel value="Nome: " />
+									<h:inputText value="#{produtoController.produto.nome}"
+										class="form-control" />
+
+									<h:outputLabel value="Descrição: " />
+									<h:inputTextarea value="#{produtoController.produto.descricao}"
+										class="form-control" />
+
+									<h:outputLabel value="Preco: " />
+									<h:inputText value="#{produtoController.produto.preco}"
+										class="form-control" />
+
+									<h:outputLabel value="Marca: " />
+									<h:selectOneMenu
+										value="#{produtoController.produto.marcaProduto}"
+										class="form-control">
+										<f:selectItem itemLabel="Selecione ...." />
+										<f:selectItems value="#{produtoController.listaMarcaProduto}"
+											var="marcaProduto" itemLabel="#{marcaProduto.label}"
+											itemValue="#{marcaProduto}" />
+									</h:selectOneMenu>
+
+									<h:outputLabel value="Cor: " />
+									<h:selectOneMenu
+										value="#{produtoController.produto.corProduto}"
+										class="form-control">
+										<f:selectItem itemLabel="Selecione ...." />
+										<f:selectItems value="#{produtoController.listaCorProduto}"
+											var="corProduto" itemLabel="#{corProduto.label}"
+											itemValue="#{corProduto}" />
+									</h:selectOneMenu>
+
+								</h:panelGrid>
+
+								<br> </br>
+
+								<h:panelGrid id="panelBotoes" columns="5">
+									<h:commandButton value="Incluir"
+										disabled="#{produtoController.produto.id != null}"
+										actionListener="#{produtoController.incluir()}"
+										class="btn btn-outline-success">
+										<f:ajax render="formPrincipal" execute="panelPrincipal"
+											resetValues="true" />
+
+									</h:commandButton>
+									<h:commandButton value="Alterar"
+										disabled="#{produtoController.produto.id == null}"
+										actionListener="#{produtoController.alterar()}"
+										class="btn btn-outline-success">
+										<f:ajax render="formPrincipal messages"
+											execute="formPrincipal" />
+									</h:commandButton>
+
+									<h:commandButton value="Excluir"
+										disabled="#{produtoController.produto.id == null}"
+										actionListener="#{produtoController.excluir()}"
+										class="btn btn-outline-danger">
+										<f:ajax render="@all" execute="@this" />
+									</h:commandButton>
+
+									<h:commandButton value="Limpar"
+										action="#{produtoController.limpar()}"
+										class="btn btn-outline-warning">
+										<f:ajax render="formPrincipal" execute="@this" />
+									</h:commandButton>
+
+									<h:button value="Voltar"
+										onclick="window.history.go(-1); return false;"
+										class="btn btn-outline-dark" />
+								</h:panelGrid>
+
+							</div>
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		jsf:integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		jsf:crossorigin="anonymous"></script>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script src="js/bootstrap.min.js"></script>
 </h:body>
 </html>

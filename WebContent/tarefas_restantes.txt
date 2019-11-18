@@ -1,0 +1,5 @@
+1 - Corrigir o redirecionamento de usuário na consulta (alterar)
+2 - Corrigir autenticação (permissoões)
+3 - Criar modelo de Menu
+4 - Criar o cálculo de total
+5 - Finalizar tela de detalhes
