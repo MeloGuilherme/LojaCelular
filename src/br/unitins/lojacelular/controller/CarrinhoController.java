@@ -37,7 +37,9 @@ public class CarrinhoController implements Serializable {
 	}
 
 	public void remover(int idProduto) {
-
+	
+		List<ItemVenda> lista = (ArrayList<ItemVenda>) Session.getInstance().getAttribute("carrinho");
+		lista.remove(idProduto);
 	}
 
 	public void finalizar() {

@@ -22,6 +22,7 @@ public class HistoricoVendaController implements Serializable {
 	private List<Venda> listaVenda = null;
 
 	public List<Venda> getListaVenda() {
+
 		if (listaVenda == null) {
 			VendaDAO dao = new VendaDAO();
 			Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
@@ -34,7 +35,7 @@ public class HistoricoVendaController implements Serializable {
 	}
 
 	public void detalhes(Venda venda) {
-		
+
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		flash.put("detalheVenda", venda);
 

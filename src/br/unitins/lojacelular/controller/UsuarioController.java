@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -21,6 +23,15 @@ public class UsuarioController implements Serializable {
 	private Usuario usuario;
 
 	private List<Usuario> listaUsuario;
+	
+	public UsuarioController() {
+		
+		Flash flash = FacesContext.
+				getCurrentInstance().
+				getExternalContext().getFlash();
+		flash.keep("usuarioFlash");
+		usuario = (Usuario) flash.get("usuarioFlash");
+	}
 
 	public Usuario getUsuario() {
 		

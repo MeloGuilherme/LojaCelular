@@ -7,7 +7,9 @@ import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import br.unitins.lojacelular.application.Session;
 import br.unitins.lojacelular.model.*;
+import br.unitins.lojacelular.controller.*;
 
 @Named
 @ViewScoped
