@@ -47,12 +47,22 @@ public class ConsultaUsuarioController implements Serializable {
 		
 		Usuario usuario = dao.findById(id);
 		
+//		System.out.println(usuario.getNome());
+//		System.out.println(usuario.getLogin());
+//		System.out.println(usuario.getSenha());
+//		System.out.println(usuario.getAtivo());
+//		System.out.println(usuario.getDataNasc());
+//		System.out.println(usuario.getEndereco().getCidade());
+//		System.out.println(usuario.getEndereco().getCep());
+//		System.out.println(usuario.getTelefone().getNumero());
+//		System.out.println(usuario.getTelefone().getCodigoArea());
+//		System.out.println(usuario.getPerfil());
+		
 		Flash flash = FacesContext.getCurrentInstance().
 					getExternalContext().
 					getFlash();
 		flash.put("usuarioFlash", usuario);
 		
-//		return "usuario.xhtml?faces-redirect=true";
 		Util.redirect("usuario.xhtml");
 	}
 

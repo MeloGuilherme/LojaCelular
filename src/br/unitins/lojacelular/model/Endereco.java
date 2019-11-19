@@ -62,4 +62,10 @@ public class Endereco {
 		this.logradouro = logradouro;
 	}
 
+	@Override
+	public String toString() {
+		return "Endereco [id=" + id + ", cidade=" + cidade + ", estado=" + estado + ", cep=" + cep + ", logradouro="
+				+ logradouro + "]";
+	}
+	
 }

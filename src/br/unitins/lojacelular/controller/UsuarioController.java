@@ -10,6 +10,7 @@ import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import br.unitins.lojacelular.application.Session;
 import br.unitins.lojacelular.application.Util;
 import br.unitins.lojacelular.dao.*;
 import br.unitins.lojacelular.model.*;
@@ -30,7 +31,10 @@ public class UsuarioController implements Serializable {
 				getCurrentInstance().
 				getExternalContext().getFlash();
 		flash.keep("usuarioFlash");
+
 		usuario = (Usuario) flash.get("usuarioFlash");
+		
+//		Session.getInstance().setAttribute("usuarioUpdate", usuario);
 	}
 
 	public Usuario getUsuario() {

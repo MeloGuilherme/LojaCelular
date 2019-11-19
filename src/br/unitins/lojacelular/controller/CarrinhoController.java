@@ -48,12 +48,22 @@ public class CarrinhoController implements Serializable {
 			Util.addMessageWarn("Eh preciso estar logado para realizar uma venda. Faca o Login!!");
 			return;
 		}
+		
+		List<ItemVenda> carrinho = (ArrayList<ItemVenda>) Session.getInstance().getAttribute("carrinho");
+		
+		if(carrinho == null) {
+			
+			Util.addMessageError("Insira produtos no carrinho!!!");
+			return;
+		}
+		
 		// montar a venda
 		Venda venda = new Venda();
 		venda.setData(LocalDate.now());
 		venda.setUsuario(usuario);
-		List<ItemVenda> carrinho = (ArrayList<ItemVenda>) Session.getInstance().getAttribute("carrinho");
+		
 		venda.setListaItemVenda(carrinho);
+		
 		// salvar no banco
 		VendaDAO dao = new VendaDAO();
 		try {

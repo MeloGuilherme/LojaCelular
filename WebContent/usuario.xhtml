@@ -45,6 +45,8 @@
 						<a class="dropdown-item" href="consultausuario.xhtml">Usuários</a>
 						<a class="dropdown-item" href="consultaproduto.xhtml">Produtos</a>
 					</div></li>
+				<li class="nav-item"><a class="nav-link" href="carrinho.xhtml">Carrinho</a></li>
+				<li class="nav-item"><a class="nav-link" href="vendaproduto.xhtml">Comprar</a></li>
 			</ul>
 
 		</div>
@@ -92,14 +94,14 @@
 									<h:inputSecret value="#{usuarioController.usuario.senha}"
 										class="form-control" placeholder="Digite seu nome" />
 
-									<h:outputLabel value="Data de Nascimento: " />
+									<h:panelGrid id="panelData">
+										<h:outputLabel value="Data de Nascimento: " />
+									</h:panelGrid>
 
-									<h:inputText id="inputData"
-										value="#{usuarioController.usuario.dataNasc}"
-										class="form-control" type="date">
-										<f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-										<f:ajax resetValues="true" />
-									</h:inputText>
+									<input type="date" class="form-control" jsf:value="#{usuarioController.usuario.dataNasc}"
+										pattern="yyyy-MM-dd">
+										<f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+									</input>
 
 									<h:outputLabel value="Usuario ativo: " />
 									<h:selectBooleanCheckbox id="checkAtivo"
@@ -178,7 +180,7 @@
 
 									<h:button value="Voltar"
 										onclick="window.history.go(-1); return false;"
-										class="btn btn-outline-dark"/>
+										class="btn btn-outline-dark" />
 								</h:panelGrid>
 
 							</div>

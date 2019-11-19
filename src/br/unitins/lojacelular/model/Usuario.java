@@ -164,4 +164,12 @@ public class Usuario implements Cloneable {
 		this.endereco = endereco;
 	}
 
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", login=" + login + ", senha=" + senha + ", ativo=" + ativo
+				+ ", dataNasc=" + dataNasc + ", telefone=" + telefone + ", perfil=" + perfil + ", endereco=" + endereco
+				+ "]";
+	}
+	
+	
 }
