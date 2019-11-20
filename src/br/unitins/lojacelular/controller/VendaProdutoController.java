@@ -21,6 +21,13 @@ public class VendaProdutoController implements Serializable {
 	private List<Produto> listaProduto = null;
 
 	public void adicionar(int idProduto) {
+		
+		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+		
+		if (usuario == null) {
+			Util.addMessageWarn("Eh preciso estar logado para adicionar ao carrinho. Faca o Login!!");
+			return;
+		}
 
 		ProdutoDAO dao = new ProdutoDAO();
 

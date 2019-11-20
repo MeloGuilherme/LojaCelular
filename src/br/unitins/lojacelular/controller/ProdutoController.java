@@ -8,6 +8,7 @@ import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import br.unitins.lojacelular.application.Session;
 import br.unitins.lojacelular.application.Util;
 import br.unitins.lojacelular.dao.*;
 import br.unitins.lojacelular.model.*;
@@ -30,6 +31,19 @@ public class ProdutoController implements Serializable{
 	
 	public void incluir() {
 		
+		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+
+		if (usuario == null) {
+			Util.addMessageWarn("Eh preciso estar logado para cadastrar. Faça o Login!!");
+			return;
+		}
+		
+		if(usuario.getPerfil().getValue() != 1) {
+			
+			Util.addMessageError("Somente administradores podem realizar cadastro!");
+			return;
+		}
+		
 		DAO<Produto> dao = new ProdutoDAO();
 		// faz a inclusao no banco de dados
 		
@@ -51,6 +65,19 @@ public class ProdutoController implements Serializable{
 	}
 
 	public void alterar() {
+		
+		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+
+		if (usuario == null) {
+			Util.addMessageWarn("Eh preciso estar logado para alterar. Faça o Login!!");
+			return;
+		}
+		
+		if(usuario.getPerfil().getValue() != 1) {
+			
+			Util.addMessageError("Somente administradores podem alterar cadastro!");
+			return;
+		}
 		
 		DAO<Produto> dao = new ProdutoDAO();
 		// faz a alteracao no banco de dados
@@ -75,6 +102,19 @@ public class ProdutoController implements Serializable{
 	}
 	
 	public void excluir() {
+		
+		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+
+		if (usuario == null) {
+			Util.addMessageWarn("Eh preciso estar logado para deletar. Faça o Login!!");
+			return;
+		}
+		
+		if(usuario.getPerfil().getValue() != 1) {
+			
+			Util.addMessageError("Somente administradores podem excluir cadastro!");
+			return;
+		}
 
 		DAO<Produto> dao = new ProdutoDAO();
 		// faz a exclusao no banco de dados

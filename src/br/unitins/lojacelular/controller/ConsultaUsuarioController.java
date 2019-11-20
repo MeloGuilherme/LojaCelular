@@ -9,6 +9,7 @@ import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import br.unitins.lojacelular.application.Session;
 import br.unitins.lojacelular.application.Util;
 import br.unitins.lojacelular.dao.*;
 import br.unitins.lojacelular.model.*;
@@ -38,25 +39,41 @@ public class ConsultaUsuarioController implements Serializable {
 	}
 
 	public void pesquisar() {
+		
+		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+
+		if (usuario == null) {
+			Util.addMessageWarn("Eh preciso estar logado para alterar. Faça o Login!!");
+			return;
+		}
+		
+		if(usuario.getPerfil().getValue() != 1 || usuario.getPerfil().getValue() != 2) {
+			
+			Util.addMessageError("Somente administradores e funcionários podem pesquisar usuários!");
+			return;
+		}
+		
 		listaUsuario = null;
 	}
 
 	public void editar(int id) {
 		
+		Usuario usu = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+
+		if (usu == null) {
+			Util.addMessageWarn("Eh preciso estar logado para alterar. Faça o Login!!");
+			return;
+		}
+		
+		if(usu.getPerfil().getValue() != 1) {
+			
+			Util.addMessageError("Somente administradores podem alterar cadastro!");
+			return;
+		}
+		
 		UsuarioDAO dao = new UsuarioDAO();
 		
-		Usuario usuario = dao.findById(id);
-		
-//		System.out.println(usuario.getNome());
-//		System.out.println(usuario.getLogin());
-//		System.out.println(usuario.getSenha());
-//		System.out.println(usuario.getAtivo());
-//		System.out.println(usuario.getDataNasc());
-//		System.out.println(usuario.getEndereco().getCidade());
-//		System.out.println(usuario.getEndereco().getCep());
-//		System.out.println(usuario.getTelefone().getNumero());
-//		System.out.println(usuario.getTelefone().getCodigoArea());
-//		System.out.println(usuario.getPerfil());
+		Usuario usuario = dao.findAllById(id);
 		
 		Flash flash = FacesContext.getCurrentInstance().
 					getExternalContext().

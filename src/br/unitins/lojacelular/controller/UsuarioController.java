@@ -10,8 +10,7 @@ import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import br.unitins.lojacelular.application.Session;
-import br.unitins.lojacelular.application.Util;
+import br.unitins.lojacelular.application.*;
 import br.unitins.lojacelular.dao.*;
 import br.unitins.lojacelular.model.*;
 
@@ -34,7 +33,6 @@ public class UsuarioController implements Serializable {
 
 		usuario = (Usuario) flash.get("usuarioFlash");
 		
-//		Session.getInstance().setAttribute("usuarioUpdate", usuario);
 	}
 
 	public Usuario getUsuario() {
@@ -48,6 +46,19 @@ public class UsuarioController implements Serializable {
 	}
 	
 	public void incluir() {
+		
+		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+
+		if (usuario == null) {
+			Util.addMessageWarn("Eh preciso estar logado para cadastrar. Faça o Login!!");
+			return;
+		}
+		
+		if(usuario.getPerfil().getValue() != 1) {
+			
+			Util.addMessageError("Somente administradores podem realizar cadastro!");
+			return;
+		}
 		
 		if (validarDados()) {
 			
@@ -76,6 +87,19 @@ public class UsuarioController implements Serializable {
 	}
 	
 	public void alterar() {
+		
+		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+
+		if (usuario == null) {
+			Util.addMessageWarn("Eh preciso estar logado para alterar. Faça o Login!!");
+			return;
+		}
+		
+		if(usuario.getPerfil().getValue() != 1) {
+			
+			Util.addMessageError("Somente administradores podem alterar cadastro!");
+			return;
+		}
 		
 		if (validarDados()) {
 			
@@ -110,6 +134,19 @@ public class UsuarioController implements Serializable {
 	}
 	
 	public boolean excluir(Usuario usuario) {
+		
+		Usuario usu = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+
+		if (usu == null) {
+			Util.addMessageWarn("Eh preciso estar logado para excluir. Faça o Login!!");
+			return false;
+		}
+		
+		if(usu.getPerfil().getValue() != 1) {
+			
+			Util.addMessageError("Somente administradores podem excluir cadastro!");
+			return false;
+		}
 
 		DAO<Usuario> dao = new UsuarioDAO();
 
@@ -147,9 +184,23 @@ public class UsuarioController implements Serializable {
 	}
 
 	public void editar(Usuario usuario) {
+		
+		Usuario u = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+
+		if (u == null) {
+			Util.addMessageWarn("Eh preciso estar logado para alterar. Faça o Login!!");
+			return;
+		}
+		
+		if(u.getPerfil().getValue() != 1) {
+			
+			Util.addMessageError("Somente administradores podem alterar cadastro!");
+			return;
+		}
+		
 		UsuarioDAO dao = new UsuarioDAO();
 		// buscando um usuario pelo id
-		Usuario usu = dao.findId(usuario.getId());
+		Usuario usu = dao.findAllById(usuario.getId());
 		setUsuario(usu);
 	}
 

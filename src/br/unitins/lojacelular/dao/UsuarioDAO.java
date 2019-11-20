@@ -116,13 +116,18 @@ public class UsuarioDAO extends DAO<Usuario> {
 			    " ativo = ?, " +
 			    " perfil = ? " +
 				"WHERE " +
-			    " id = ? ");
+			    " id = ? ", Statement.RETURN_GENERATED_KEYS);
 		stat.setString(1, usuario.getNome());
 		stat.setString(2, usuario.getLogin());
 		stat.setString(3, usuario.getSenha());
 		stat.setBoolean(4, usuario.getAtivo());
 		stat.setInt(5, usuario.getPerfil().getValue());
 		stat.setInt(6, usuario.getId());
+		
+		ResultSet rs = stat.getGeneratedKeys();
+		rs.next();
+		usuario.getEndereco().setId(rs.getInt("id"));
+		usuario.getTelefone().setId(rs.getInt("id"));
 		
 		TelefoneDAO telDao = new TelefoneDAO(conn);
 		EnderecoDAO endDao = new EnderecoDAO(conn);
@@ -332,6 +337,7 @@ public class UsuarioDAO extends DAO<Usuario> {
 				
 				usuario = new Usuario();
 				usuario.setTelefone(new Telefone());
+				usuario.setEndereco(new Endereco());
 				usuario.setId(rs.getInt("id"));
 				usuario.setNome(rs.getString("nome"));
 				usuario.setLogin(rs.getString("login"));
@@ -342,6 +348,74 @@ public class UsuarioDAO extends DAO<Usuario> {
 
 			return usuario;
 
+		} 
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public Usuario findAllById(Integer id) {
+		
+		Connection conn = getConnection();
+		
+		if (conn == null) 
+			return null;
+			
+			try {
+				PreparedStatement stat = conn.prepareStatement(
+						"SELECT " +
+								"  id, " +
+								"  nome, " +
+								"  login, " +
+								"  senha, " + 
+								"  ativo, " + 
+								"  perfil " + 
+								"FROM " + 
+								"  public.usuario " + 
+								"WHERE id = ? ");
+				
+				stat.setInt(1, id);
+			
+			ResultSet rs = stat.executeQuery();
+			
+			Usuario usuario = null;
+			
+			if(rs.next()) {
+				
+				usuario = new Usuario();
+				usuario.setId(rs.getInt("id"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				usuario.setAtivo(rs.getBoolean("ativo"));
+				usuario.setPerfil(Perfil.valueOf(rs.getInt("perfil")));
+//				usuario.getTelefone().setId(rs.getInt("id_telefone"));
+//				usuario.getTelefone().setCodigoArea(rs.getString("tel.codigoarea"));
+//				usuario.getTelefone().setNumero(rs.getString("tel.numero"));
+//				usuario.getEndereco().setId(rs.getInt("id_endereco"));
+//				usuario.getEndereco().setCidade(rs.getString("e.cidade"));
+//				usuario.getEndereco().setEstado(rs.getString("e.estado"));
+//				usuario.getEndereco().setCep(rs.getString("e.cep"));
+//				usuario.getEndereco().setLogradouro(rs.getString("e.logradouro"));
+				
+				TelefoneDAO telDao = new TelefoneDAO(conn);
+				usuario.setTelefone(telDao.findById(usuario.getId()));
+				// caso o retorno do telefone seja nulo, instanciar um telefone
+				if (usuario.getTelefone() == null)
+					usuario.setTelefone(new Telefone());
+				
+				EnderecoDAO endDao = new EnderecoDAO(conn);
+				usuario.setEndereco(endDao.findById(usuario.getId()));
+				// caso o retorno do telefone seja nulo, instanciar um telefone
+				if (usuario.getEndereco() == null)
+					usuario.setEndereco(new Endereco());
+			}
+			
+			return usuario;
+			
 		} 
 		
 		catch (SQLException e) {
