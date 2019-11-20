@@ -1,5 +1,8 @@
 package br.unitins.lojacelular.controller;
 
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
@@ -14,6 +17,8 @@ public class LoginController {
 	private Usuario usuario;
 
 	public void logar() {
+		
+		verificaCapslock();
 
 		UsuarioDAO dao = new UsuarioDAO();
 
@@ -26,6 +31,7 @@ public class LoginController {
 			// armazenando um usuario na sessao
 			Session.getInstance().setAttribute("usuarioLogado", usuario);
 			Util.redirect("menu.xhtml");
+			
 			Integer num = usuario.getPerfil().getValue();
 
 			if (num.equals(1)) {
@@ -55,15 +61,34 @@ public class LoginController {
 			Util.addMessageError("Usuário ou Senha Inválido.");
 		}
 	}
+	
+	public void verificaCapslock() {
+		
+	    boolean ligado = Toolkit.getDefaultToolkit().getLockingKeyState(
+	            KeyEvent.VK_CAPS_LOCK );
+
+	    if ( ligado ) {
+
+	    	Util.addMessageWarn("Tecla CAPSLOCK ativada!");
+	    	System.out.println("Tecla CAPSLOCK ativada!");
+	    } 
+	    
+	    else {
+	    	
+	    	System.out.println("Tecla CAPSLOCK desativada!");
+	    }
+	}
 
 	public void limpar() {
+		
 		setUsuario(new Usuario());
-//		usuario = new Usuario();
 	}
 
 	public Usuario getUsuario() {
+		
 		if (usuario == null)
 			usuario = new Usuario();
+		
 		return usuario;
 	}
 

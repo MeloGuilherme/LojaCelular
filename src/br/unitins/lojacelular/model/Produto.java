@@ -1,13 +1,24 @@
 package br.unitins.lojacelular.model;
 
+import javax.validation.constraints.NotEmpty;
+
 public class Produto {
 
 	private Integer id;
-
+	
+	@NotEmpty(message = "O Nome do Produto não pode ser vazio!")
 	private String nome;
+	
+	@NotEmpty(message = "O Preço do Produto não pode ser vazio!")
 	private Float preco;
+	
+	@NotEmpty(message = "Favor dar uma descrição...")
 	private String descricao;
+	
+	@NotEmpty(message = "SELECIONE A MARCA!")
 	private MarcaProduto marcaProduto;
+	
+	@NotEmpty(message = "SELECIONE A COR!")
 	private CorProduto corProduto;
 
 	public Produto() {
@@ -72,5 +83,4 @@ public class Produto {
 	public void setCorProduto(CorProduto corProduto) {
 		this.corProduto = corProduto;
 	}
-
 }

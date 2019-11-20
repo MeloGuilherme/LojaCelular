@@ -1,22 +1,16 @@
 package br.unitins.lojacelular.model;
 
+import javax.validation.constraints.NotEmpty;
+
 public class Telefone {
 	
 	private Integer id;
 	
+	@NotEmpty(message = "O DDD não pode ser vazio")
 	private String codigoArea;
+	
+	@NotEmpty(message = "Favor digitar numero do telefone!")
 	private String numero;
-
-//	public Telefone() {
-//		super();
-//	}
-//
-//	public Telefone(Integer id, String codigoArea, String numero) {
-//		super();
-//		this.id = id;
-//		this.codigoArea = codigoArea;
-//		this.numero = numero;
-//	}
 
 	public Integer getId() {
 		return id;
@@ -46,6 +40,5 @@ public class Telefone {
 	public String toString() {
 		return "Telefone [id=" + id + ", codigoArea=" + codigoArea + ", numero=" + numero + "]";
 	}
-	
 	
 }

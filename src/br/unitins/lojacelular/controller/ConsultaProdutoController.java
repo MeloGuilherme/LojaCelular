@@ -41,13 +41,13 @@ public class ConsultaProdutoController implements Serializable{
 		
 		flash.put("produtoFlash", produto);
 		
-//		return "produto.xhtml?faces-redirect=true";
 		Util.redirect("produto.xhtml");
 	}
 
 	public List<Produto> getListaProduto() {
 		
 		if (listaProduto == null) {
+			
 			ProdutoDAO dao = new ProdutoDAO();
 			
 			listaProduto = dao.findByNome(getNome());
@@ -67,6 +67,5 @@ public class ConsultaProdutoController implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 
 }

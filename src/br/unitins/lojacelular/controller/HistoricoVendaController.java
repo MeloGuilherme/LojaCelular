@@ -24,13 +24,19 @@ public class HistoricoVendaController implements Serializable {
 	public List<Venda> getListaVenda() {
 
 		if (listaVenda == null) {
+			
 			VendaDAO dao = new VendaDAO();
+			
 			Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+			
 			listaVenda = dao.findByUsuario(usuario.getId());
+			
 			if (listaVenda == null)
 				listaVenda = new ArrayList<Venda>();
+			
 			dao.closeConnection();
 		}
+		
 		return listaVenda;
 	}
 

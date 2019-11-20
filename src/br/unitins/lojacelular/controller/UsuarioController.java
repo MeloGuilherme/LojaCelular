@@ -63,8 +63,8 @@ public class UsuarioController implements Serializable {
 		if (validarDados()) {
 			
 			DAO<Usuario> dao = new UsuarioDAO();
-			// faz a inclusao no banco de dados
 			
+			// faz a inclusao no banco de dados
 			try {
 				
 				getUsuario().setSenha(Util.gerarHash(getUsuario().getSenha()));
@@ -88,14 +88,15 @@ public class UsuarioController implements Serializable {
 	
 	public void alterar() {
 		
-		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
+		Usuario usu = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
 
-		if (usuario == null) {
+		if (usu == null) {
+			
 			Util.addMessageWarn("Eh preciso estar logado para alterar. Faça o Login!!");
 			return;
 		}
 		
-		if(usuario.getPerfil().getValue() != 1) {
+		if(usu.getPerfil().getValue() != 1) {
 			
 			Util.addMessageError("Somente administradores podem alterar cadastro!");
 			return;
@@ -104,8 +105,8 @@ public class UsuarioController implements Serializable {
 		if (validarDados()) {
 			
 			DAO<Usuario> dao = new UsuarioDAO();
-			// faz a alteracao no banco de dados
 			
+			// faz a alteracao no banco de dados
 			try {
 				
 				getUsuario().setSenha(Util.gerarHash(getUsuario().getSenha()));
@@ -199,6 +200,7 @@ public class UsuarioController implements Serializable {
 		}
 		
 		UsuarioDAO dao = new UsuarioDAO();
+		
 		// buscando um usuario pelo id
 		Usuario usu = dao.findAllById(usuario.getId());
 		setUsuario(usu);

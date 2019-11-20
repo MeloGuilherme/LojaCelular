@@ -22,10 +22,12 @@ public class ProdutoController implements Serializable{
 	private Produto produto;
 	
 	public ProdutoController() {
+		
 		Flash flash = FacesContext.
 				getCurrentInstance().
 				getExternalContext().getFlash();
 		flash.keep("produtoFlash");
+		
 		produto = (Produto) flash.get("produtoFlash");
 	}
 	
@@ -34,6 +36,7 @@ public class ProdutoController implements Serializable{
 		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
 
 		if (usuario == null) {
+			
 			Util.addMessageWarn("Eh preciso estar logado para cadastrar. Faça o Login!!");
 			return;
 		}
@@ -45,8 +48,8 @@ public class ProdutoController implements Serializable{
 		}
 		
 		DAO<Produto> dao = new ProdutoDAO();
-		// faz a inclusao no banco de dados
 		
+		// faz a inclusao no banco de dados
 		try {
 			
 			dao.create(getProduto());
@@ -69,6 +72,7 @@ public class ProdutoController implements Serializable{
 		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
 
 		if (usuario == null) {
+			
 			Util.addMessageWarn("Eh preciso estar logado para alterar. Faça o Login!!");
 			return;
 		}
@@ -80,8 +84,8 @@ public class ProdutoController implements Serializable{
 		}
 		
 		DAO<Produto> dao = new ProdutoDAO();
-		// faz a alteracao no banco de dados
 		
+		// faz a alteracao no banco de dados
 		try {
 			
 			dao.update(getProduto());
@@ -106,6 +110,7 @@ public class ProdutoController implements Serializable{
 		Usuario usuario = (Usuario) Session.getInstance().getAttribute("usuarioLogado");
 
 		if (usuario == null) {
+			
 			Util.addMessageWarn("Eh preciso estar logado para deletar. Faça o Login!!");
 			return;
 		}
@@ -117,6 +122,7 @@ public class ProdutoController implements Serializable{
 		}
 
 		DAO<Produto> dao = new ProdutoDAO();
+		
 		// faz a exclusao no banco de dados
 		try {
 			
@@ -141,7 +147,9 @@ public class ProdutoController implements Serializable{
 	}
 
 	public Produto getProduto() {
+		
 		if (produto == null) {
+			
 			produto = new Produto();
 		}
 		return produto;

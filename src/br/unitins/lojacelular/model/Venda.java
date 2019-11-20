@@ -9,15 +9,10 @@ public class Venda {
 	private LocalDate data;
 	private Usuario usuario;
 
-//	private Double precoTotal;
-//	private LocalDate horaFinalPedido;
-//	private LocalDate dataFinalPedido;
-//	private StatusPedido statusPedido;
-
 	private List<ItemVenda> listaItemVenda;
 	
 	// campo calculado
-	private Float totalVenda = 0.0f;
+	private Float totalVenda;
 
 	public Integer getId() {
 		return id;
@@ -52,6 +47,16 @@ public class Venda {
 	}
 	
 	public Float getTotalVenda() {
+		
+		totalVenda = 0.0f;
+		
+		if(!listaItemVenda.equals(null)) {
+			
+			for (ItemVenda itemVenda : listaItemVenda) {
+				
+				totalVenda += itemVenda.getValor();
+			}
+		}
 		return totalVenda;
 	}
 

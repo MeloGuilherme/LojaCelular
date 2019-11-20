@@ -116,7 +116,7 @@ public class UsuarioDAO extends DAO<Usuario> {
 			    " ativo = ?, " +
 			    " perfil = ? " +
 				"WHERE " +
-			    " id = ? ", Statement.RETURN_GENERATED_KEYS);
+			    " id = ? ");
 		stat.setString(1, usuario.getNome());
 		stat.setString(2, usuario.getLogin());
 		stat.setString(3, usuario.getSenha());
@@ -124,10 +124,8 @@ public class UsuarioDAO extends DAO<Usuario> {
 		stat.setInt(5, usuario.getPerfil().getValue());
 		stat.setInt(6, usuario.getId());
 		
-		ResultSet rs = stat.getGeneratedKeys();
-		rs.next();
-		usuario.getEndereco().setId(rs.getInt("id"));
-		usuario.getTelefone().setId(rs.getInt("id"));
+		usuario.getEndereco().setId(usuario.getId());
+		usuario.getTelefone().setId(usuario.getId());
 		
 		TelefoneDAO telDao = new TelefoneDAO(conn);
 		EnderecoDAO endDao = new EnderecoDAO(conn);
@@ -392,14 +390,6 @@ public class UsuarioDAO extends DAO<Usuario> {
 				usuario.setSenha(rs.getString("senha"));
 				usuario.setAtivo(rs.getBoolean("ativo"));
 				usuario.setPerfil(Perfil.valueOf(rs.getInt("perfil")));
-//				usuario.getTelefone().setId(rs.getInt("id_telefone"));
-//				usuario.getTelefone().setCodigoArea(rs.getString("tel.codigoarea"));
-//				usuario.getTelefone().setNumero(rs.getString("tel.numero"));
-//				usuario.getEndereco().setId(rs.getInt("id_endereco"));
-//				usuario.getEndereco().setCidade(rs.getString("e.cidade"));
-//				usuario.getEndereco().setEstado(rs.getString("e.estado"));
-//				usuario.getEndereco().setCep(rs.getString("e.cep"));
-//				usuario.getEndereco().setLogradouro(rs.getString("e.logradouro"));
 				
 				TelefoneDAO telDao = new TelefoneDAO(conn);
 				usuario.setTelefone(telDao.findById(usuario.getId()));
